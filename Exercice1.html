@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercice 1</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        
+        h2 {
+            color: #4472c4;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        form {
+            width: 600px;
+            margin: 0 auto;
+        }
+        
+        .champ {
+            margin-bottom: 10px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 200px;
+            vertical-align: top;
+        }
+        
+        input,
+        select,
+        textarea {
+            width: 300px;
+        }
+        
+        textarea {
+            height: 50px;
+            resize: none;
+        }
+        
+        .boutons {
+            margin-left: 205px;
+            margin-top: 10px;
+        }
+        
+        #recapitulatif {
+            width: 500px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #000;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Exercice 1</h2>
+
+    <h1>Formulaire d'inscription</h1>
+
+    <form id="inscriptionForm">
+        <div class="champ">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom">
+        </div>
+        <div class="champ">
+            <label for="prenom">Prenom :</label>
+            <input type="text" id="prenom">
+        </div>
+        <div class="champ">
+            <label for="email">E-mail :</label>
+            <input type="email" id="email">
+        </div>
+        <div class="champ">
+            <label for="mdp">Mot de passe :</label>
+            <input type="password" id="mdp">
+        </div>
+        <div class="champ">
+            <label for="mdp2">Resaisir le mot de passe :</label>
+            <input type="password" id="mdp2">
+        </div>
+        <div class="champ">
+            <label for="telephone">Telephone :</label>
+            <input type="tel" id="telephone">
+        </div>
+        <div class="champ">
+            <label for="langue">Langue :</label>
+            <select id="langue">
+                <option value="Anglais">Anglais</option>
+                <option value="Français">Français</option>
+                <option value="Arabe">Arabe</option>
+            </select>
+        </div>
+        <div class="champ">
+            <label for="commentaire">Commentaire :</label>
+            <textarea id="commentaire"></textarea>
+        </div>
+        <div class="boutons">
+            <input type="submit" value="Valider">
+            <input type="reset" value="Annuler" id="btnAnnuler">
+        </div>
+    </form>
+
+    <div id="recapitulatif"></div>
+
+    <script>
+        document.getElementById('inscriptionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var nom = document.getElementById('nom').value;
+            var prenom = document.getElementById('prenom').value;
+            var email = document.getElementById('email').value;
+            var mdp = document.getElementById('mdp').value;
+            var mdp2 = document.getElementById('mdp2').value;
+            var telephone = document.getElementById('telephone').value;
+            var langue = document.getElementById('langue').value;
+            var commentaire = document.getElementById('commentaire').value;
+
+            if (nom === "" || prenom === "" || email === "" || mdp === "" || mdp2 === "" || telephone === "" || commentaire === "") {
+                alert("Tous les champs sont obligatoires");
+            } else {
+                var divRecap = document.getElementById('recapitulatif');
+                divRecap.style.display = "block";
+                divRecap.innerHTML = "<h3>Récapitulatif</h3>" +
+                    "<p>Nom : " + nom + "</p>" +
+                    "<p>Prenom : " + prenom + "</p>" +
+                    "<p>Email : " + email + "</p>" +
+                    "<p>Téléphone : " + telephone + "</p>" +
+                    "<p>Langue : " + langue + "</p>" +
+                    "<p>Commentaire : " + commentaire + "</p>";
+            }
+        });
+
+        document.getElementById('btnAnnuler').addEventListener('click', function() {
+            var divRecap = document.getElementById('recapitulatif');
+            divRecap.innerHTML = "";
+            divRecap.style.display = "none";
+        });
+    </script>
+
+</body>
+
+</html>

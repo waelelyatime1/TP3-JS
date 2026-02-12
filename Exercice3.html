@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercice 3 Simplifié</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 150px;
+            margin-bottom: 5px;
+        }
+        
+        input,
+        select {
+            margin-bottom: 5px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        th,
+        td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Exercice 3</h2>
+
+    <form id="monFormulaire">
+        <label>Code étudiant :</label> <input type="text" id="code"><br>
+        <label>Nom :</label> <input type="text" id="nom"><br>
+        <label>Prénom :</label> <input type="text" id="prenom"><br>
+        <label>Semestre :</label>
+        <select id="semestre">
+            <option value="">-- Choisir --</option>
+            <option value="S1">Semestre 1</option>
+            <option value="S2">Semestre 2</option>
+        </select><br>
+        <br>
+        <label>Note Module 1 :</label> <input type="number" id="n1"><br>
+        <label>Note Module 2 :</label> <input type="number" id="n2"><br>
+        <label>Note Module 3 :</label> <input type="number" id="n3"><br>
+        <label>Note Module 4 :</label> <input type="number" id="n4"><br>
+        <label>Note Module 5 :</label> <input type="number" id="n5"><br>
+        <label>Note Module 6 :</label> <input type="number" id="n6"><br>
+        <br>
+        <button type="submit">Valider</button>
+    </form>
+
+    <table id="tableResultats">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Semestre</th>
+                <th>M1</th>
+                <th>M2</th>
+                <th>M3</th>
+                <th>M4</th>
+                <th>M5</th>
+                <th>M6</th>
+                <th>Moyenne</th>
+                <th>Décision</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById("monFormulaire").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            var code = document.getElementById("code").value;
+            var nom = document.getElementById("nom").value;
+            var prenom = document.getElementById("prenom").value;
+            var sem = document.getElementById("semestre").value;
+
+            var n1 = parseFloat(document.getElementById("n1").value);
+            var n2 = parseFloat(document.getElementById("n2").value);
+            var n3 = parseFloat(document.getElementById("n3").value);
+            var n4 = parseFloat(document.getElementById("n4").value);
+            var n5 = parseFloat(document.getElementById("n5").value);
+            var n6 = parseFloat(document.getElementById("n6").value);
+
+            if (!code || !nom || !prenom || !sem || isNaN(n1) || isNaN(n2) || isNaN(n3) || isNaN(n4) || isNaN(n5) || isNaN(n6)) {
+                alert("Veuillez remplir tous les champs correctement");
+                return;
+            }
+
+            var notes = [n1, n2, n3, n4, n5, n6];
+            var somme = 0;
+            var noteEliminatoire = false;
+            var modulesNonValides = 0;
+
+            for (var i = 0; i < 6; i++) {
+                somme += notes[i];
+                if (notes[i] < 8) noteEliminatoire = true;
+                if (notes[i] < 12) modulesNonValides++;
+            }
+
+            var moyenne = somme / 6;
+            var decision = "Validé";
+
+            if (moyenne < 12 || noteEliminatoire || modulesNonValides >= 3) {
+                decision = "Échoué";
+            }
+
+            var ligne = "<tr>" +
+                "<td>" + code + "</td>" +
+                "<td>" + nom + "</td>" +
+                "<td>" + prenom + "</td>" +
+                "<td>" + sem + "</td>" +
+                "<td>" + n1 + "</td>" +
+                "<td>" + n2 + "</td>" +
+                "<td>" + n3 + "</td>" +
+                "<td>" + n4 + "</td>" +
+                "<td>" + n5 + "</td>" +
+                "<td>" + n6 + "</td>" +
+                "<td>" + moyenne.toFixed(2) + "</td>" +
+                "<td>" + decision + "</td>" +
+                "</tr>";
+
+            document.querySelector("#tableResultats tbody").innerHTML += ligne;
+        });
+    </script>
+
+</body>
+
+</html>

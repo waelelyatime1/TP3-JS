@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercice 2</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            color: #333;
+        }
+        
+        h2 {
+            color: #4472c4;
+        }
+        
+        form {
+            width: 400px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1a5dd0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #154bad;
+        }
+        
+        #resultat {
+            margin-top: 20px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            padding: 10px;
+            text-align: center;
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Exercice 2</h2>
+
+    <form id="generateurForm">
+        <div class="form-group">
+            <label for="dimension">Dimension du tableau</label>
+            <input type="number" id="dimension">
+        </div>
+        <div class="form-group">
+            <label for="minVal">La valeur minimale</label>
+            <input type="number" id="minVal">
+        </div>
+        <div class="form-group">
+            <label for="maxVal">La valeur maximale</label>
+            <input type="number" id="maxVal">
+        </div>
+        <button type="submit">Générez un tableau</button>
+    </form>
+
+    <div id="resultat"></div>
+
+    <script>
+        document.getElementById('generateurForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var dim = parseInt(document.getElementById('dimension').value);
+            var min = parseInt(document.getElementById('minVal').value);
+            var max = parseInt(document.getElementById('maxVal').value);
+            var divResultat = document.getElementById('resultat');
+
+            divResultat.innerHTML = "";
+
+            if (isNaN(dim) || isNaN(min) || isNaN(max)) {
+                alert("Veuillez saisir des nombres entiers valides dans tous les champs.");
+                return;
+            }
+
+            if (min >= max) {
+                alert("La valeur minimale doit être inférieure à la valeur maximale.");
+                return;
+            }
+
+            var table = document.createElement('table');
+            var tr = document.createElement('tr');
+
+            for (var i = 1; i <= dim; i++) {
+                var td = document.createElement('td');
+                var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                td.textContent = randomNum;
+                tr.appendChild(td);
+
+                if (i % 10 === 0) {
+                    table.appendChild(tr);
+                    tr = document.createElement('tr');
+                }
+            }
+
+            if (tr.children.length > 0) {
+                table.appendChild(tr);
+            }
+
+            divResultat.appendChild(table);
+        });
+    </script>
+
+</body>
+
+</html>
